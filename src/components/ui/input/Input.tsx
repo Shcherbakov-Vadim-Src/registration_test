@@ -22,22 +22,22 @@ const Input = ({ lable, name, value, onChange }: IInputProps) => {
       }
     }, [isPhone, isEmail]);
 
-    const setCorrectNotification = useCallback((notification: string) => {
+    const setWarningNotification = useCallback((notification: string) => {
       setNotification(notification);
       setIsWarning(true);
     }, []);
 
     const regexValue = useCallback(() => {
       if (isPassword && value.length < 8) {
-        setCorrectNotification(PASSWORD_WARNING);
+        setWarningNotification(PASSWORD_WARNING);
       } 
       if (isEmail && !REGEX_EMAIL.test(value)) {
-        setCorrectNotification(EMAIL_WARNING);
+        setWarningNotification(EMAIL_WARNING);
       }
       if (isPhone && !REGEX_PHONE.test(value)) {
-        setCorrectNotification(PHONE_WARNING);
+        setWarningNotification(PHONE_WARNING);
       }
-    }, [isEmail, isPassword, isPhone, value, setCorrectNotification]); 
+    }, [isEmail, isPassword, isPhone, value, setWarningNotification]); 
 
     useEffect(() => {
       if (!firstStep.current && value === '') {

@@ -2,7 +2,7 @@ export interface IInputProps {
     name: string;
     lable: string;
     value: string;
-    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   }
 
   export enum EInputNames {

@@ -5,7 +5,7 @@ import Button from './../ui/button/Button';
 import Input from './../ui/input/Input';
 import { REGEX_EMAIL } from '../../consts';
 
-const SecondStepComponent = ({ setStep, formData, handleChange }: ISecondStepComponentProps) => {
+const SecondStepComponent = ({ setStep, formData, onChange }: ISecondStepComponentProps) => {
   const handleClick = () => setStep(true);
 
   const getResult = () => console.log('result:', formData);
@@ -18,19 +18,19 @@ const SecondStepComponent = ({ setStep, formData, handleChange }: ISecondStepCom
           lable='Имя' 
           name="name" 
           value={formData.name} 
-          handleChange={handleChange} 
+          onChange={onChange}
         />
         <Input 
           lable='Фамилия' 
           name="lastName" 
           value={formData.lastName} 
-          handleChange={handleChange} 
+          onChange={onChange}
         />
         <Input 
           lable='E-mail' 
           name="eMail" 
           value={formData.eMail} 
-          handleChange={handleChange} 
+          onChange={onChange}
         />
         <Button 
           name="Зарегистрировать" 

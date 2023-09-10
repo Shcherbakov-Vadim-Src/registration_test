@@ -11,7 +11,6 @@ const App = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
-
     setFormData({...formData, [name]: value});
   };
 
@@ -23,13 +22,13 @@ const App = () => {
           <FirstStepComponent 
             setStep={setIsFirstStep} 
             formData={formData} 
-            handleChange={handleChange} 
+            onChange={handleChange} 
           /> 
           : 
           <SecondStepComponent 
             setStep={setIsFirstStep} 
             formData={formData} 
-            handleChange={handleChange} 
+            onChange={handleChange} 
           />
         }
       </FormWrapper>

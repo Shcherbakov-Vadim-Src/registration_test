@@ -3,7 +3,7 @@ import { InputWrapper, Lable, Container, NotificationText, NotificationWrapper, 
 import { IInputProps, EInputNames } from './types';
 import { IS_EMPTY, PHONE_JOTTING, EMAIL_JOTTING, PASSWORD_WARNING, EMAIL_WARNING, PHONE_WARNING, REGEX_EMAIL, REGEX_PHONE } from './../../../consts';
 
-const Input = ({ lable, name, value, handleChange }: IInputProps) => {
+const Input = ({ lable, name, value, onChange }: IInputProps) => {
     const [notification, setNotification] = useState<string>('');
     const [isWarning, setIsWarning] = useState<boolean>(false);
     const firstStep = useRef(true); 
@@ -22,23 +22,24 @@ const Input = ({ lable, name, value, handleChange }: IInputProps) => {
       }
     }, [isPhone, isEmail]);
 
+    const setCorrectNotification = useCallback((notification: string) => {
+      setNotification(notification);
+      setIsWarning(true);
+    }, []);
+
     const regexValue = useCallback(() => {
       if (isPassword && value.length < 8) {
-        setNotification(PASSWORD_WARNING);
-        setIsWarning(true);
+        setCorrectNotification(PASSWORD_WARNING);
       } 
       if (isEmail && !REGEX_EMAIL.test(value)) {
-        setNotification(EMAIL_WARNING);
-        setIsWarning(true);
+        setCorrectNotification(EMAIL_WARNING);
       }
       if (isPhone && !REGEX_PHONE.test(value)) {
-        setNotification(PHONE_WARNING);
-        setIsWarning(true);
+        setCorrectNotification(PHONE_WARNING);
       }
-    }, [isEmail, isPassword, isPhone, value]);
+    }, [isEmail, isPassword, isPhone, value, setCorrectNotification]); 
 
     useEffect(() => {
-      setInitialNotification();
       if (!firstStep.current && value === '') {
         setIsWarning(true);
         setNotification(IS_EMPTY);
@@ -50,7 +51,7 @@ const Input = ({ lable, name, value, handleChange }: IInputProps) => {
       }
     }, [value, regexValue, setInitialNotification]);
 
-    const handleBlur = () => {
+    const blurFocusFunction = () => {
       if (value === '') {
         setIsWarning(true);
         setNotification(IS_EMPTY);
@@ -60,15 +61,9 @@ const Input = ({ lable, name, value, handleChange }: IInputProps) => {
       }
     };
 
-    const handleFocus = () => {
-      if (value === '') {
-        setIsWarning(true);
-        setNotification(IS_EMPTY);
-      } else {
-        setIsWarning(false);
-        setInitialNotification();
-      }
-    };
+    const onBlur = () => blurFocusFunction();
+
+    const onFocus = () => blurFocusFunction();
 
     return (
       <Container>
@@ -76,9 +71,9 @@ const Input = ({ lable, name, value, handleChange }: IInputProps) => {
         <InputWrapper 
           value={value} 
           name={name} 
-          onBlur={handleBlur} 
-          onFocus={handleFocus} 
-          onChange={handleChange}
+          onBlur={onBlur} 
+          onFocus={onFocus} 
+          onChange={onChange}
           type={isPassword ? EInputNames.password : 'text'}
         />
         <NotificationWrapper>

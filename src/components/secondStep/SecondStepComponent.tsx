@@ -1,9 +1,9 @@
 import { ButtonType } from './../ui/button/types';
-import { Wrapper } from './styles';
 import { ISecondStepComponentProps } from './types';
+import { REGEX_EMAIL } from '../../consts';
+import Wrapper from './../ui/wrapper/Wrapper';
 import Button from './../ui/button/Button';
 import Input from './../ui/input/Input';
-import { REGEX_EMAIL } from '../../consts';
 
 const SecondStepComponent = ({ setStep, formData, onChange }: ISecondStepComponentProps) => {
   const handleClick = () => setStep(true);
